@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO_DO</title>
+    <style>
+    input {
+    border: 0;
+    border-bottom: 2px solid blue;
+    width: 85%;
+    font-size: 40px;
+    line-height: 40px;
+    height: 70px;
+    text-align: center;
+    padding: 10px,;
+    background: transparent;
+   }
+   #err{
+       color: red;
+   }
+   </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body style="background-color:lightsteelblue">
+    <center>
+      <div class="container" id="to">
+          <div class="card text-center">
+              <div class="card-header">
+                  <h2>TO_DO List</h2>
+              </div>
+              <div class="card-body">
+                 <input type="text" placeholder="Write to_do's Here" v-model='todo' @keyup.enter="add(todo)"><br><br/>
+                <a href="#" @click="add(todo)" class="btn btn-primary">ADD</a>
+                <a href="#" @click="clear(todo)" class="btn btn-danger">CLEAR</a><br/><br/>
+                <div id="err">{{ err_msg }}</div>
+                <h2 v-if="this.lists.length === 0"><marquee scrollamount="15"> NO TODO'S FOUND.WRITE SOMETHING</marquee></h2>
+                <span v-else>
+                <div v-for=" (list, index) in lists" >
+                <div class="card text-dark pb-0">
+                    <div class="card-body">
+                      <i>
+                       
+                             <h4>{{ index + 1}} . {{ list }}</h4><a @click="dto(index)" class="btn btn-primary">DELETE</a>
+                        
+                      </i>
+                     </div>
+                </div>
+              </div>
+              <br/>
+            <a class="btn btn-danger col-md-4" @click="delete_all()">DELETE ALL</a>
+            </span>
+            </div>
+            <div class="card-footer text-muted">
+                @SETHU_KGM
+            </div>
+          </div>
+    </center>
+
+    <!-- vue_script -->
+    <script>
+     new Vue({
+        el:'#to',
+        data:{
+            todo:'',
+            err_msg:'',
+            lists:[]
+        },
+        methods: {
+           add:function(mytodo){
+                if(mytodo.length === 0){
+                    this.err_msg='write something'
+                }else{
+                 this.lists.push(mytodo)
+                 this.todo=''
+                 this.err_msg=''
+                }
+           },
+           clear:function(){
+            this.todo=''
+           },
+           dto:function(value){
+               this.lists.splice(value, 1)
+               console.log(value)
+           },
+           delete_all:function(){
+               this.lists=[]
+           },
+       
+        },
+    });
+    </script>
+</body>
+</html>
